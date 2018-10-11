@@ -67,7 +67,7 @@ CUDA_VISIBLE_DEVICES='' python main.py --path './backendGRU/backendGRU_x.pt' --d
 |audio-only    |97.72       |
 |audiovisual   |98.38       |
 
-The state-of-the-art performance are slightly better compared with [the ICASSP's paper](https://ieeexplore.ieee.org/document/8461326) due to further fine-tuning models. Please send email at pingchuan.ma16 \<AT\> imperial.ac.uk for the pre-trained models.
+The results are slightly better than ones reported in [the ICASSP's paper](https://ieeexplore.ieee.org/document/8461326) due to further fine-tuning of the models. Please send email at pingchuan.ma16 \<AT\> imperial.ac.uk for the pre-trained models.
 
 ## Reference
 
