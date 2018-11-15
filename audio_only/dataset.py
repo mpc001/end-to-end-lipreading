@@ -23,13 +23,13 @@ class MyDataset():
         self.path = path
         self.clean = 1 / 7.
         with open('../label_sorted.txt') as myfile:
-            lines = myfile.read().splitlines()
-        self.data_dir = [self.path + item for item in lines]
+            self.data_dir = myfile.read().splitlines()
         self.data_files = glob.glob(self.path+'*/'+self.folds+'/*.mat')
         self.list = {}
         for i, x in enumerate(self.data_files):
+            target = x.split('/')[-3]
             for j, elem in enumerate(self.data_dir):
-                if elem in x:
+                if elem == target:
                     self.list[i] = [x]
                     self.list[i].append(j)
         print('Load {} part'.format(self.folds))
