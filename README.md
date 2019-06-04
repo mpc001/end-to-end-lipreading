@@ -12,7 +12,7 @@ This implementation includes 2-layer BGRU which consists of 1024 cells in each l
 
 * python 2.7
 * pytorch 0.3.1
-* opencv-python
+* opencv-python 3.4.0
 
 ## Dataset
 
