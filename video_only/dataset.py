@@ -1,12 +1,12 @@
 # encoding: utf-8
-import numpy as np
-import glob
-import time
+import os
 import cv2
+import glob
+import numpy as np
 
 
 def load_file(filename):
-    cap = np.load(filename)
+    cap = np.load(filename)['data']
     arrays = np.stack([cv2.cvtColor(cap[_], cv2.COLOR_RGB2GRAY)
                       for _ in xrange(29)], axis=0)
     arrays = arrays / 255.
@@ -19,9 +19,9 @@ class MyDataset():
         self.path = path
         with open('../label_sorted.txt') as myfile:
             self.data_dir = myfile.read().splitlines()
-        self.data_files = glob.glob(self.path+'*/'+self.folds+'/*.npy')
+        self.filenames = glob.glob(os.path.join(self.path, '*', self.folds, '*.npz'))
         self.list = {}
-        for i, x in enumerate(self.data_files):
+        for i, x in enumerate(self.filenames):
             target = x.split('/')[-3]
             for j, elem in enumerate(self.data_dir):
                 if elem == target:
@@ -35,4 +35,4 @@ class MyDataset():
         return inputs, labels
 
     def __len__(self):
-        return len(self.data_files)
+        return len(self.filenames)

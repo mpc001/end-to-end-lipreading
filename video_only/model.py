@@ -1,8 +1,6 @@
 # coding: utf-8
 import math
 import numpy as np
-
-
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -43,7 +41,6 @@ class BasicBlock(nn.Module):
 
 
 class ResNet(nn.Module):
-
     def __init__(self, block, layers, num_classes=1000):
         self.inplanes = 64
         super(ResNet, self).__init__()

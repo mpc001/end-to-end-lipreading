@@ -1,34 +1,19 @@
 """
-Transforms mp4 videos to npz. Code has strong assumptions on the dataset organization!
+Transforms mp4 audio to npz. Code has strong assumptions on the dataset organization!
 
 """
 
 import os
-import cv2
 import glob
+import librosa
 import numpy as np
-
-
-def extract_opencv(filename):
-    video = []
-    cap = cv2.VideoCapture(filename)
-
-    while(cap.isOpened()):
-        ret, frame = cap.read() # BGR
-        if ret:
-            video.append(frame)
-        else:
-            break
-    cap.release()
-    video = np.array(video)
-    return video[...,::-1]
 
 
 basedir = ''
 basedir_to_save = ''
 filenames = glob.glob(os.path.join(basedir, '*', '*', '*.mp4'))
 for filename in filenames:
-    data = extract_opencv(filename)[:, 115:211, 79:175]
+    data = librosa.load(filename, sr=16000)[0][-19456:]
     path_to_save = os.path.join(basedir_to_save,
                                 filename.split('/')[-3],
                                 filename.split('/')[-2],

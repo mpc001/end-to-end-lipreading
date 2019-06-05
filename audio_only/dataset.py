@@ -1,20 +1,8 @@
 # encoding: utf-8
-import time
+import os
 import glob
 import random
-import scipy.io
 import numpy as np
-
-
-def load_file(filename):
-    arrays = scipy.io.loadmat(filename)
-    arrays = arrays['audio']
-    arrays = arrays[0]
-    arrays = arrays[0]
-    arrays = arrays[0]
-    arrays = arrays.flatten()
-    arrays = arrays.astype(float)
-    return arrays
 
 
 class MyDataset():
@@ -24,9 +12,9 @@ class MyDataset():
         self.clean = 1 / 7.
         with open('../label_sorted.txt') as myfile:
             self.data_dir = myfile.read().splitlines()
-        self.data_files = glob.glob(self.path+'*/'+self.folds+'/*.mat')
+        self.filenames = glob.glob(os.path.join(self.path, '*', self.folds, '*.npz'))
         self.list = {}
-        for i, x in enumerate(self.data_files):
+        for i, x in enumerate(self.filenames):
             target = x.split('/')[-3]
             for j, elem in enumerate(self.data_dir):
                 if elem == target:
@@ -60,10 +48,10 @@ class MyDataset():
                 self.list[idx][0] = self.list[idx][0]
         elif self.folds == 'val' or self.folds == 'test':
                 self.list[idx][0] = self.list[idx][0]
-        inputs = load_file(self.list[idx][0])
+        inputs = np.load(self.list[idx][0])['data']
         labels = self.list[idx][1]
         inputs = self.normalisation(inputs)
         return inputs, labels
 
     def __len__(self):
-        return len(self.data_files)
+        return len(self.filenames)

@@ -8,18 +8,11 @@ import numpy as np
 
 
 def load_audio_file(filename):
-    arrays = scipy.io.loadmat(filename)
-    arrays = arrays['audio']
-    arrays = arrays[0]
-    arrays = arrays[0]
-    arrays = arrays[0]
-    arrays = arrays.flatten()
-    arrays = arrays.astype(float)
-    return arrays
+    return np.load(filename)['data']
 
 
 def load_video_file(filename):
-    cap = np.load(filename)
+    cap = np.load(filename)['data']
     arrays = np.stack([cv2.cvtColor(cap[_], cv2.COLOR_RGB2GRAY) for _ in xrange(29)], axis=0)
     arrays = arrays / 255.
     return arrays
@@ -33,9 +26,9 @@ class MyDataset():
         self.clean = 1 / 7.
         with open('../label_sorted.txt') as myfile:
             self.data_dir = myfile.read().splitlines()
-        self.data_files = glob.glob(self.audio_path+'*/'+self.folds+'/*.mat')
+        self.filenames = glob.glob(os.path.join(self.audio_path, '*', self.folds, '*.npz'))
         self.list = {}
-        for i, x in enumerate(self.data_files):
+        for i, x in enumerate(self.filenames):
             target = x.split('/')[-3]
             for j, elem in enumerate(self.data_dir):
                 if elem == target:
@@ -49,7 +42,10 @@ class MyDataset():
         return (inputs - np.mean(inputs))/inputs_std
 
     def __getitem__(self, idx):
-        video_inputs = load_video_file(self.video_path+self.list[idx][0][42:-4]+'.npy')
+        video_inputs = load_video_file(os.path.join(self.video_path,
+                                                    self.list[idx][0].split('/')[-3],
+                                                    self.list[idx][0].split('/')[-2],
+                                                    self.list[idx][0].split('/')[-1][:-4]+'.npz'))
         noise_prop = (1-self.clean)/6.
         temp = random.random()
         if self.folds == 'train':
@@ -75,4 +71,4 @@ class MyDataset():
         return audio_inputs, video_inputs, labels
 
     def __len__(self):
-        return len(self.data_files)
+        return len(self.filenames)

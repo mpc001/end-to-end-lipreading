@@ -5,16 +5,12 @@ import random
 import logging
 import argparse
 import numpy as np
-
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torchvision import datasets
 from torch.autograd import Variable
-
-
 from lr_scheduler import *
 from model import *
 from dataset import *
@@ -174,17 +170,17 @@ def test_adam(args, use_gpu):
 def main():
     # Settings
     parser = argparse.ArgumentParser(description='Pytorch Audio-only BBC-LRW Example')
-    parser.add_argument('--nClasses', default=500, help='the number of classes')
+    parser.add_argument('--nClasses', default=500, type=int, help='the number of classes')
     parser.add_argument('--path', default='', help='path to model')
     parser.add_argument('--dataset', default='', help='path to dataset')
     parser.add_argument('--mode', default='temporalConv', help='temporalConv, backendGRU, finetuneGRU')
-    parser.add_argument('--every-frame', default=True, help='predicition based on every frame')
-    parser.add_argument('--lr', default=0.0003, help='initial learning rate')
+    parser.add_argument('--every-frame', default=False, action='store_true', help='predicition based on every frame')
+    parser.add_argument('--lr', default=0.0003, type=float, help='initial learning rate')
     parser.add_argument('--batch-size', default=36, type=int, help='mini-batch size (default: 36)')
-    parser.add_argument('--workers', default=4, help='number of data loading workers (default: 4)')
-    parser.add_argument('--epochs', default=30, help='number of total epochs')
-    parser.add_argument('--interval', default=10, help='display interval')
-    parser.add_argument('--test', default=False, help='perform on the test phase')
+    parser.add_argument('--workers', default=4, type=int, help='number of data loading workers (default: 4)')
+    parser.add_argument('--epochs', default=30, type=int, help='number of total epochs')
+    parser.add_argument('--interval', default=10, type=int, help='display interval')
+    parser.add_argument('--test', default=False, action='store_true', help='perform on the test phase')
     args = parser.parse_args()
 
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'

@@ -26,38 +26,36 @@ i) Start by training with temporal convolutional backend, you can run the script
 
 ```
 CUDA_VISIBLE_DEVICES='' python main.py --path '' --dataset <dataset_path> \
-                                       --mode 'temporalConv' --every-frame False \
+                                       --mode 'temporalConv' \
                                        --batch_size 36 --lr 3e-4 \
-                                       --epochs 30 --test False 
+                                       --epochs 30
 ```
 
 ii)Throw away the temporal convolutional backend, freeze the parameters of the frontend and the ResNet and train the LSTM backend, then run the script:
 
 ```
 CUDA_VISIBLE_DEVICES='' python main.py --path './temporalConv/temporalConv_x.pt' --dataset <dataset_path> \
-                                       --mode 'backendGRU' --every-frame True \
+                                       --mode 'backendGRU' --every-frame \
                                        --batch_size 36 --lr 3e-4 \
-                                       --epochs 5 --test False 
+                                       --epochs 5
 ```
 
 iii)Train the whole network end-to-end. You can run the script:
 
 ```
 CUDA_VISIBLE_DEVICES='' python main.py --path './backendGRU/backendGRU_x.pt' --dataset <dataset_path> \
-                                       --mode 'finetuneGRU' --every-frame True \
+                                       --mode 'finetuneGRU' --every-frame \
                                        --batch_size 36 --lr 3e-4 \
-                                       --epochs 30 --test False 
+                                       --epochs 30
 ```
 
 **Notes**
 
-`every-frame` is `True` when the backend is recurrent neural network.
+`every-frame` is activated when the backend module is recurrent neural network.
 
-`dataset` need be correctly specified before running.
+`dataset` need be correctly specified before running. Code has strong assumptions on the dataset organisation.
 
 `temporalConv_x.pt` or `backendGRU_x.pt` are the models with best validation performance on step ii) or step iii).
-
-`.mat` and `.npy` are the default format for audio wavform and mouth ROI dataset.
 
 ## Models&Accuracy
 
