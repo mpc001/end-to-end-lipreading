@@ -10,7 +10,7 @@ This implementation includes 2-layer BGRU which consists of 1024 cells in each l
 
 ## Update
 
-*2020-06-06*: Please check https://github.com/mpc001/Lipreading_using_Temporal_Convolutional_Networks for our lipreading model which can easily achieve 85.5% on LRW dataset.
+`2020-06-06`: Please check https://github.com/mpc001/Lipreading_using_Temporal_Convolutional_Networks for our lipreading models which can easily achieve 85.5% on LRW dataset.
 
 ## Dependencies
 
