@@ -1,8 +1,6 @@
 # encoding: utf-8
 import math
 import numpy as np
-
-
 from torch.optim.optimizer import Optimizer
 
 
