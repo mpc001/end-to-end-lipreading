@@ -1,8 +1,13 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Copyright 2018 Imperial College London (Pingchuan Ma)
+# Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
+
 """
 Transforms mp4 videos to npz and crop fixed mouth ROIs. Code has strong assumptions on the dataset organization!
 
 """
-
 import os
 import cv2
 import glob
